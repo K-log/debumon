@@ -59,7 +59,9 @@ int main()
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window;
     SDL_Renderer *renderer;
-    
+    SDL_CreateWindowAndRenderer(CANVAS_X, CANVAS_Y, 0, &window, &renderer);
+
+
     // Setup the context for the game
     context ctx;
     ctx.renderer = renderer;
