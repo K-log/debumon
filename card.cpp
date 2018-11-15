@@ -34,3 +34,7 @@ int Card::getWidth(){
 int Card::getHeight(){
     return card.h;
 }
+void Card::rotate(double degree, SDL_Rect &sdlRect){
+    SDL_RendererFlip flipType = SDL_FLIP_NONE;
+    SDL_RenderCopyEx(??, ??, NULL, sdlRect, degree, NULL, flipType);
+}

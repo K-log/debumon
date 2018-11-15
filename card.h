@@ -15,6 +15,7 @@ class Card{
         void changeHeight(int new_Height);
         int getWidth();
         int getHeight();
+        void rotate(double degree);
     private:
         int damage, cost;
         SDL_Rect card;
