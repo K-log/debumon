@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <emscripten.h>
 #include <cstdlib>
-
+//include "game.h"
 
 #define CANVAS_X 700
 #define CANVAS_Y 900
@@ -13,6 +13,13 @@ struct context
     int iteration;
 };
 
+struct baseColors
+{
+    int red;
+    int green;
+    int blue;
+    int alpha;
+};
 
 /**
  * Main Loop
@@ -20,6 +27,7 @@ struct context
  */
 void mainloop(void *arg)
 {
+
     // Cast args to the right type
     context *ctx = static_cast<context*>(arg);
     
@@ -27,9 +35,16 @@ void mainloop(void *arg)
     SDL_Renderer *renderer = ctx->renderer;
 
     // example: draw a moving rectangle
-    
+ 
+    baseColors bgc;
+
+    bgc.red = 96;
+    bgc.green = 96;
+    bgc.blue = 96;
+    bgc.alpha = 255;
+
     // red background
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, bgc.red, bgc.blue, bgc.green, bgc.alpha);
     SDL_RenderClear(renderer);
     
     // moving blue rectangle
@@ -59,7 +74,10 @@ int main()
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window;
     SDL_Renderer *renderer;
-    SDL_CreateWindowAndRenderer(CANVAS_X, CANVAS_Y, 0, &window, &renderer);
+
+    int width = emscripten_run_script_int("window.outerWidth");
+    int height = emscripten_run_script_int("window.outerHeight");
+    SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
 
 
     // Setup the context for the game
