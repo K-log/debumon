@@ -1,17 +1,11 @@
 #include <SDL2/SDL.h>
 #include <emscripten.h>
 #include <cstdlib>
-//include "game.h"
+#include "deblib.h"
 
 #define CANVAS_X 700
 #define CANVAS_Y 900
 
-
-struct context
-{
-    SDL_Renderer *renderer;
-    int iteration;
-};
 
 struct baseColors
 {
@@ -33,9 +27,17 @@ void mainloop(void *arg)
     
     // Get the renderer
     SDL_Renderer *renderer = ctx->renderer;
+    SDL_Window *window = ctx->window;
 
     // example: draw a moving rectangle
  
+    
+    int width = emscripten_run_script_int("window.innerWidth");
+    int height = emscripten_run_script_int("window.innerHeight");
+    int offW = 0.05*width; // Shrink width by 10%
+    int offH = 0.05*height; // Shring height by 10%
+    SDL_CreateWindowAndRenderer(width-offW, height-offH, 0, &window, &renderer);
+
     baseColors bgc;
 
     bgc.red = 96;
@@ -75,15 +77,17 @@ int main()
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    int width = emscripten_run_script_int("window.outerWidth");
-    int height = emscripten_run_script_int("window.outerHeight");
-    SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
+    int width = emscripten_run_script_int("window.innerWidth");
+    int height = emscripten_run_script_int("window.innerHeight");
+    SDL_CreateWindowAndRenderer(width-180, height-100, 0, &window, &renderer);
+
 
 
     // Setup the context for the game
     context ctx;
     ctx.renderer = renderer;
     ctx.iteration = 0;
+    ctx.window = window;
 
     // Start the game
     const int simulate_infinite_loop = 1; // call the function repeatedly

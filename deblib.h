@@ -5,5 +5,5 @@
 struct context {
     SDL_Renderer* renderer;
     SDL_Window* window;
-    int iterations;
-}
+    int iteration;
+};
