@@ -1,6 +1,8 @@
 #ifndef CARD_H
 #define CARD_H
 #include "SDL2/SDL.h"
+#include <string>
+using namespace std;
 
 class Card{
     public:
@@ -17,7 +19,8 @@ class Card{
         int getHeight();
         void rotate(double degree);
     private:
+        string *card;
         int damage, cost;
-        SDL_Rect card;
+        SDL_Texture card;
 };
 #endif
