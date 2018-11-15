@@ -1,6 +1,6 @@
 CXXFLAGS = -s WASM=1 -s USE_SDL=2 -03
 CXX = emcc
-FLAGS = -c -w
+FLAGS = -c -w 
 
 all: main.o debumon clean
 
