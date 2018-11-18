@@ -3,7 +3,7 @@
 # To K-log: If it doesn't I can make you another make file and you would just run make nameofuniquemake
 # Also, "Meow".
 
-CXFLAGS = -s WASM=1
+CXXFLAGS = -s WASM=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0
 CXX = emcc
 FLAGS = -c -w -std=c++11 -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' 
 
