@@ -6,7 +6,6 @@
 #define CANVAS_X 700
 #define CANVAS_Y 900
 
-
 struct baseColors
 {
     int red;
@@ -21,7 +20,6 @@ struct baseColors
  */
 void mainloop(void *arg)
 {
-
     // Cast args to the right type
     context *ctx = static_cast<context*>(arg);
     
@@ -51,10 +49,21 @@ void mainloop(void *arg)
     
     // moving blue rectangle
     int X, Y;
-    SDL_GetMouseState(&X, &Y);
+    int *oldX, *oldY;
+    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        SDL_GetMouseState(&X, &Y);
+        SDL_Rect r;
+        r.x = X - 25;
+        r.y = Y - 25;
+        r.w = 50;
+        r.h = 50;
+        oldX = &X;
+        oldY = &Y;
+    }
+
     SDL_Rect r;
-    r.x = X - 25;
-    r.y = Y - 25;
+    r.x = *oldX - 25;
+    r.y = *oldY - 25;
     r.w = 50;
     r.h = 50;
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255 );
@@ -81,13 +90,12 @@ int main()
     int height = emscripten_run_script_int("window.innerHeight");
     SDL_CreateWindowAndRenderer(width-180, height-100, 0, &window, &renderer);
 
-
-
     // Setup the context for the game
     context ctx;
     ctx.renderer = renderer;
     ctx.iteration = 0;
     ctx.window = window;
+
 
     // Start the game
     const int simulate_infinite_loop = 1; // call the function repeatedly
