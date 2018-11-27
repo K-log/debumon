@@ -12,11 +12,17 @@ all: main.o singleCard.o debumon clean
 main.o: main.cpp
 	$(CXX) $(FLAGS) main.cpp
 
+game.o: game.cpp game.h
+	$(CXX) $(FLAGS) game.cpp
+
 singleCard.o: singleCard.cpp singleCard.h
 	$(CXX) $(FLAGS) singleCard.cpp
 
 debumon: main.o singleCard.o
 	$(CXX) main.o singleCard.o $(CXXFLAGS) -o index.js
+
+game: main.o game.o
+	$(CXX) main.o game.o $(CXXFLAGS) -o index.js
 
 clean:
 	rm -f *.o

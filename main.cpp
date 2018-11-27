@@ -2,9 +2,8 @@
 #include <emscripten.h>
 #include <cstdlib>
 #include "deblib.h"
+#include "game.h"
 
-#define CANVAS_X 700
-#define CANVAS_Y 900
 
 struct baseColors
 {
@@ -21,21 +20,11 @@ struct baseColors
 void mainloop(void *arg)
 {
     // Cast args to the right type
-    context *ctx = static_cast<context*>(arg);
+    Game *game = static_cast<Game*>(arg);
     
-    // Get the renderer
-    SDL_Renderer *renderer = ctx->renderer;
-    SDL_Window *window = ctx->window;
+    game->update();
 
     // example: draw a moving rectangle
- 
-    
-    int width = emscripten_run_script_int("window.innerWidth");
-    int height = emscripten_run_script_int("window.innerHeight");
-    int offW = 0.05*width; // Shrink width by 10%
-    int offH = 0.05*height; // Shring height by 10%
-    SDL_CreateWindowAndRenderer(width-offW, height-offH, 0, &window, &renderer);
-
     baseColors bgc;
 
     bgc.red = 96;
@@ -44,8 +33,8 @@ void mainloop(void *arg)
     bgc.alpha = 255;
 
     // red background
-    SDL_SetRenderDrawColor(renderer, bgc.red, bgc.blue, bgc.green, bgc.alpha);
-    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(game->ctx.renderer, bgc.red, bgc.blue, bgc.green, bgc.alpha);
+    SDL_RenderClear(game->ctx.renderer);
     
     // moving blue rectangle
     int X, Y;
@@ -66,12 +55,11 @@ void mainloop(void *arg)
     r.y = *oldY - 25;
     r.w = 50;
     r.h = 50;
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255 );
-    SDL_RenderFillRect(renderer, &r );
+    SDL_SetRenderDrawColor(game->ctx.renderer, 0, 0, 255, 255 );
+    SDL_RenderFillRect(game->ctx.renderer, &r );
 
     
-    SDL_RenderPresent(renderer);
-    ctx->iteration += 1;
+    SDL_RenderPresent(game->ctx.renderer);
 
 }
 
@@ -81,31 +69,21 @@ void mainloop(void *arg)
  */
 int main()
 {
-    // Initialize SDL and the canvas
-    SDL_Init(SDL_INIT_VIDEO);
+    // Setup the Game class
     SDL_Window *window;
     SDL_Renderer *renderer;
-
     int width = emscripten_run_script_int("window.innerWidth");
     int height = emscripten_run_script_int("window.innerHeight");
-    SDL_CreateWindowAndRenderer(width-180, height-100, 0, &window, &renderer);
 
-    // Setup the context for the game
-    context ctx;
-    ctx.renderer = renderer;
-    ctx.iteration = 0;
-    ctx.window = window;
+    Game game(renderer, window, width, height);
 
-
+    game.update();
+        
     // Start the game
     const int simulate_infinite_loop = 1; // call the function repeatedly
     const int fps = 0; // call the function as fast as the browser wants to render (typically 60fps)
-    emscripten_set_main_loop_arg(mainloop, &ctx, fps, simulate_infinite_loop); // Pass the paremeters to the emscripten loop (func, args, fps, iterations)
-   
-    // Cleanup  
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    emscripten_set_main_loop_arg(mainloop, &game, fps, simulate_infinite_loop); // Pass the paremeters to the emscripten loop (func, args, fps, iterations)
+  
 
     return EXIT_SUCCESS;
 }
