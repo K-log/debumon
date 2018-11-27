@@ -1,9 +1,11 @@
 #include <SDL2/SDL.h>
-#include <emscripten.h>
 #include <cstdlib>
 #include "deblib.h"
 #include "game.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 struct baseColors
 {
@@ -22,7 +24,6 @@ void mainloop(void *arg)
     // Cast args to the right type
     Game *game = static_cast<Game*>(arg);
     
-    game->update();
 
     // example: draw a moving rectangle
     baseColors bgc;
@@ -51,8 +52,8 @@ void mainloop(void *arg)
     }
 
     SDL_Rect r;
-    r.x = *oldX - 25;
-    r.y = *oldY - 25;
+    r.x = 25;
+    r.y = 25;
     r.w = 50;
     r.h = 50;
     SDL_SetRenderDrawColor(game->ctx.renderer, 0, 0, 255, 255 );
@@ -61,6 +62,8 @@ void mainloop(void *arg)
     
     SDL_RenderPresent(game->ctx.renderer);
 
+
+    game->update();
 }
 
 /**
@@ -72,12 +75,9 @@ int main()
     // Setup the Game class
     SDL_Window *window;
     SDL_Renderer *renderer;
-    int width = emscripten_run_script_int("window.innerWidth");
-    int height = emscripten_run_script_int("window.innerHeight");
-
+    int width = 900;
+    int height = 700;
     Game game(renderer, window, width, height);
-
-    game.update();
         
     // Start the game
     const int simulate_infinite_loop = 1; // call the function repeatedly

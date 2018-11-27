@@ -7,7 +7,7 @@ Game::Game(SDL_Renderer *renderer, SDL_Window *window, int canvasX, int canvasY)
     ctx.window = window;
     ctx.canvasX = canvasX;
     ctx.canvasY = canvasY;
-
+    SDL_CreateWindowAndRenderer(ctx.canvasX, ctx.canvasY, 0, &ctx.window, &ctx.renderer);
 }
 
 Game::~Game()
@@ -34,3 +34,4 @@ int Game::drawLevel(context ctx)
 {
     return 0;
 }
+
