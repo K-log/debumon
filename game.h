@@ -24,6 +24,9 @@
 
 class Game 
 {
+    private:
+       SDL_Event event;
+
     public:
         struct context
         {

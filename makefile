@@ -5,7 +5,7 @@
 
 CXXFLAGS = -s WASM=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' 
 CXX = emcc
-FLAGS = -c -w -std=c++11 -l sdl2_image -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' 
+FLAGS = -c -w -std=c++11 -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' 
 
 all: main.o singleCard.o debumon clean
 
