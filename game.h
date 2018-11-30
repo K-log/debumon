@@ -24,6 +24,9 @@
 
 class Game 
 {
+    private:
+       SDL_Event event;
+
     public:
         struct context
         {
@@ -40,7 +43,9 @@ class Game
         int update(); // Update the window size and position every time it's called.
         int drawLevel(context contx); // Draw the current level to the screen.    
         int destroyLevel(context contx); // Destroy the current level and free the resources.
-        int changeLevel(context contx; // Change the current level without destroying it. 
+        int changeLevel(context contx); // Change the current level without destroying it. 
+
+                        
 }; 
 
 
