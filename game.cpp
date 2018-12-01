@@ -1,6 +1,7 @@
 #include "game.h"
+#include "cards.h"
 
-Game::Game(SDL_Renderer *renderer, SDL_Window *window, int canvasX, int canvasY)
+Game::Game(SDL_Renderer *renderer, SDL_Window *window, int canvasX, int canvasY, vector<Cards*> allCardPiles)
 {
     SDL_Init(SDL_INIT_VIDEO);
     ctx.renderer = renderer;
@@ -8,6 +9,7 @@ Game::Game(SDL_Renderer *renderer, SDL_Window *window, int canvasX, int canvasY)
     ctx.canvasX = canvasX;
     ctx.canvasY = canvasY;
     SDL_CreateWindowAndRenderer(ctx.canvasX, ctx.canvasY, 0, &ctx.window, &ctx.renderer);
+    ctx.allCardPiles = allCardPiles;
 }
 
 Game::~Game()
@@ -35,3 +37,7 @@ int Game::drawLevel(context ctx)
     return 0;
 }
 
+void Game::newCardPile(string &new_type){
+    Cards newCardType(new_type);
+    allCardPiles.push_back(new Cards(new_type));
+}

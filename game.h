@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <emscripten.h>
+#include "cards.h"
 
 /**
  * Game 
@@ -32,15 +33,17 @@ class Game
             int iterations;
             int canvasX;
             int canvasY;
+            vector<Cards*> allCardPiles;
         };
 
         context ctx;
-        Game(SDL_Renderer *renderer, SDL_Window *window, int canvasX, int canvasY);
+        Game(SDL_Renderer *renderer, SDL_Window *window, int canvasX, int canvasY, vector<Cards*> allCardPiles);
         ~Game(); 
         int update(); // Update the window size and position every time it's called.
         int drawLevel(context contx); // Draw the current level to the screen.    
         int destroyLevel(context contx); // Destroy the current level and free the resources.
-        int changeLevel(context contx; // Change the current level without destroying it. 
+        int changeLevel(context contx); // Change the current level without destroying it. 
+        void newCardPile(string &new_type); 
 }; 
 
 

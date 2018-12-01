@@ -77,8 +77,10 @@ int main()
     SDL_Renderer *renderer;
     int width = 900;
     int height = 700;
-    Game game(renderer, window, width, height);
-        
+    vector<Cards*> allCardPiles;
+    Game game(renderer, window, width, height, allCardPiles);
+    string basic = "Basic";
+    game.newCardPile(basic);   
     // Start the game
     const int simulate_infinite_loop = 1; // call the function repeatedly
     const int fps = 0; // call the function as fast as the browser wants to render (typically 60fps)
