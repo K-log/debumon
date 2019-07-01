@@ -56,7 +56,7 @@ void mainloop(void *arg)
     r.y = 25;
     r.w = 50;
     r.h = 50;
-    SDL_SetRenderDrawColor(game->ctx.renderer, 0, 0, 255, 255 );
+    SDL_SetRenderDrawColor(game->ctx.renderer, 255, 0, 255, 255 );
     SDL_RenderFillRect(game->ctx.renderer, &r );
 
     

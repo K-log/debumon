@@ -22,20 +22,21 @@ Game::~Game()
 
 int Game::update()
 {
+    /*
     while(SDL_PollEvent(&event))
     {
-        switch(event.type) { /* Process the appropriate event type */
-            case SDL_KEYDOWN:  /* Handle a KEYDOWN event */
+        switch(event.type) { // Process the appropriate event type /
+            case SDL_KEYDOWN:  // Handle a KEYDOWN event /
                 printf("Oh! Key press\n");
                 break;
             case SDL_MOUSEMOTION:
                 printf("Mouse motion detected\n");
-            default: /* Report an unhandled event */
+            default: // Report an unhandled event /
                 printf("I don't know what this event is!\n");
         }
    
     }
-
+    */
 
     int width = emscripten_run_script_int("window.innerWidth");
     int height = emscripten_run_script_int("window.innerHeight");
